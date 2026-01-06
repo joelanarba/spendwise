@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SpendWise
 
-## Getting Started
+A mobile-first personal finance tracker that helps you understand where your money goes.
 
-First, run the development server:
+## Quick Start
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+1. **Set up Supabase**
+   - Create a project at [supabase.com](https://supabase.com)
+   - Run `supabase/schema.sql` in SQL Editor
+   - Enable Email auth in Authentication settings
+
+2. **Configure environment**
+   ```bash
+   cp env.example .env.local
+   # Fill in your Supabase URL and anon key
+   ```
+
+3. **Run the app**
+   ```bash
+   npm install
+   npm run dev
+   ```
+
+4. **Open in browser**
+   - http://localhost:3000
+
+## Features
+
+- ✅ **Quick-add transactions** - Log spending in under 5 seconds
+- ✅ **7 categories** - Food, Transport, Bills, Shopping, Fun, Health, Other
+- ✅ **Weekly summary** - See spending breakdown by category
+- ✅ **Week-over-week comparison** - Track if you're spending more or less
+- ✅ **PWA support** - Install on phone, works offline
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Frontend | Next.js 14 (App Router) |
+| Backend | Supabase (Auth + PostgreSQL) |
+| Styling | Tailwind CSS |
+| PWA | Service Worker + Web Manifest |
+
+## Project Structure
+
+```
+esp/
+├── src/
+│   ├── app/           # Next.js pages
+│   ├── components/    # React components
+│   └── lib/           # Utilities & Supabase clients
+├── public/
+│   ├── manifest.json  # PWA manifest
+│   ├── sw.js          # Service worker
+│   └── icons/         # App icons
+├── supabase/
+│   └── schema.sql     # Database schema
+└── docs/              # Step-by-step documentation
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Documentation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [Step 1: Supabase Setup](docs/../supabase/SETUP.md)
+- [Step 2: Auth Flow](docs/STEP2_AUTH.md)
+- [Step 3: Quick-add UI](docs/STEP3_QUICK_ADD.md)
+- [Step 4: Weekly Summary](docs/STEP4_WEEKLY_SUMMARY.md)
+- [Step 5: PWA Support](docs/STEP5_PWA.md)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## License
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
