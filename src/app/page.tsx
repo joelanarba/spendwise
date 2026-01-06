@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { QuickAddIcon, InsightsIcon, BudgetsIcon } from '@/lib/categories'
 
 export default function Home() {
   return (
@@ -48,7 +49,7 @@ export default function Home() {
               <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
-              Private & secure
+              Private and secure
             </div>
             <div className="flex items-center gap-2">
               <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -64,17 +65,23 @@ export default function Home() {
       <section className="px-4 pb-16">
         <div className="max-w-lg mx-auto grid grid-cols-3 gap-4">
           <div className="bg-white/5 backdrop-blur rounded-2xl p-4 text-center border border-white/10">
-            <div className="text-2xl mb-2">📝</div>
+            <div className="w-8 h-8 mx-auto mb-2 text-emerald-400">
+              <QuickAddIcon className="w-8 h-8" />
+            </div>
             <div className="text-white font-medium text-sm">Quick Add</div>
             <div className="text-slate-500 text-xs mt-1">Log in 5 sec</div>
           </div>
           <div className="bg-white/5 backdrop-blur rounded-2xl p-4 text-center border border-white/10">
-            <div className="text-2xl mb-2">📊</div>
+            <div className="w-8 h-8 mx-auto mb-2 text-emerald-400">
+              <InsightsIcon className="w-8 h-8" />
+            </div>
             <div className="text-white font-medium text-sm">Insights</div>
             <div className="text-slate-500 text-xs mt-1">Weekly trends</div>
           </div>
           <div className="bg-white/5 backdrop-blur rounded-2xl p-4 text-center border border-white/10">
-            <div className="text-2xl mb-2">🎯</div>
+            <div className="w-8 h-8 mx-auto mb-2 text-emerald-400">
+              <BudgetsIcon className="w-8 h-8" />
+            </div>
             <div className="text-white font-medium text-sm">Budgets</div>
             <div className="text-slate-500 text-xs mt-1">Stay on track</div>
           </div>

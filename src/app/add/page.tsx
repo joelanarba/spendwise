@@ -4,25 +4,19 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
+import { CATEGORIES, CategoryType, getCategoryIcon } from '@/lib/categories'
 
-type Category = 'food' | 'transport' | 'bills' | 'shopping' | 'entertainment' | 'health' | 'other'
-
-const CATEGORIES: { id: Category; label: string; icon: string; color: string }[] = [
-  { id: 'food', label: 'Food', icon: '🍔', color: 'from-orange-400 to-red-400' },
-  { id: 'transport', label: 'Transport', icon: '🚗', color: 'from-blue-400 to-indigo-400' },
-  { id: 'bills', label: 'Bills', icon: '📄', color: 'from-purple-400 to-pink-400' },
-  { id: 'shopping', label: 'Shopping', icon: '🛍️', color: 'from-pink-400 to-rose-400' },
-  { id: 'entertainment', label: 'Fun', icon: '🎬', color: 'from-yellow-400 to-orange-400' },
-  { id: 'health', label: 'Health', icon: '💊', color: 'from-green-400 to-emerald-400' },
-  { id: 'other', label: 'Other', icon: '📦', color: 'from-slate-400 to-slate-500' },
-]
+const CATEGORY_LIST = Object.entries(CATEGORIES).map(([id, meta]) => ({
+  id: id as CategoryType,
+  ...meta,
+}))
 
 export default function AddTransactionPage() {
   const router = useRouter()
   const supabase = createClient()
 
   const [amount, setAmount] = useState('')
-  const [category, setCategory] = useState<Category | null>(null)
+  const [category, setCategory] = useState<CategoryType | null>(null)
   const [note, setNote] = useState('')
   const [date, setDate] = useState(new Date().toISOString().split('T')[0])
   const [step, setStep] = useState<'amount' | 'category' | 'details'>('amount')
@@ -44,7 +38,7 @@ export default function AddTransactionPage() {
     }
   }
 
-  const handleCategorySelect = (cat: Category) => {
+  const handleCategorySelect = (cat: CategoryType) => {
     setCategory(cat)
     setStep('details')
   }
@@ -89,6 +83,8 @@ export default function AddTransactionPage() {
     minimumFractionDigits: amount.includes('.') ? amount.split('.')[1]?.length || 0 : 0,
     maximumFractionDigits: 2,
   }) : '0'
+
+  const selectedCategory = category ? CATEGORIES[category] : null
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex flex-col">
@@ -159,18 +155,20 @@ export default function AddTransactionPage() {
             </div>
             <p className="text-slate-400 text-sm mb-4 text-center">What was this for?</p>
             <div className="grid grid-cols-2 gap-3 flex-1">
-              {CATEGORIES.map((cat) => (
+              {CATEGORY_LIST.map((cat) => (
                 <button key={cat.id} onClick={() => handleCategorySelect(cat.id)}
                   className={`p-4 rounded-2xl border-2 transition-all active:scale-95 ${
                     category === cat.id ? 'border-emerald-400 bg-emerald-400/20' : 'border-white/10 bg-white/5 hover:bg-white/10'
                   }`}>
-                  <div className="text-3xl mb-2">{cat.icon}</div>
+                  <div className="w-10 h-10 mx-auto mb-2 text-white">
+                    {getCategoryIcon(cat.id, 'w-10 h-10')}
+                  </div>
                   <div className="text-white font-medium">{cat.label}</div>
                 </button>
               ))}
             </div>
             <button onClick={() => setStep('amount')} className="w-full py-3 text-slate-400 hover:text-white transition-colors mt-4 mb-6">
-              ← Back to amount
+              Back to amount
             </button>
           </>
         )}
@@ -184,10 +182,12 @@ export default function AddTransactionPage() {
                   <p className="text-slate-400 text-sm">Amount</p>
                   <p className="text-2xl font-bold text-white">${formattedAmount}</p>
                 </div>
-                <div className="text-4xl">{CATEGORIES.find(c => c.id === category)?.icon}</div>
+                <div className="w-12 h-12 text-white">
+                  {category && getCategoryIcon(category, 'w-12 h-12')}
+                </div>
               </div>
               <span className="px-3 py-1 rounded-full bg-white/10 text-sm text-slate-400">
-                {CATEGORIES.find(c => c.id === category)?.label}
+                {selectedCategory?.label}
               </span>
             </div>
             <div className="space-y-4 flex-1">
@@ -214,7 +214,7 @@ export default function AddTransactionPage() {
                 )}
               </button>
               <button onClick={() => setStep('category')} disabled={isSubmitting} className="w-full py-3 text-slate-400 hover:text-white transition-colors">
-                ← Change category
+                Change category
               </button>
             </div>
           </>

@@ -3,12 +3,11 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import TransactionsList from '@/components/TransactionsList'
 import SuccessToast from '@/components/SuccessToast'
-import SyncPrompt from '@/components/SyncPrompt'
 
 export default async function DashboardPage({
   searchParams,
 }: {
-  searchParams: Promise<{ added?: string; offline?: string }>
+  searchParams: Promise<{ added?: string }>
 }) {
   const supabase = await createClient()
   const params = await searchParams
@@ -36,13 +35,11 @@ export default async function DashboardPage({
     .limit(10)
 
   const showSuccess = params.added === 'true'
-  const showOfflineSuccess = params.offline === 'true'
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Success Toasts */}
+      {/* Success Toast */}
       {showSuccess && <SuccessToast message="Transaction saved!" />}
-      {showOfflineSuccess && <SuccessToast message="Saved offline! Sync when online." />}
 
       {/* Header */}
       <header className="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-lg border-b border-white/10">
@@ -68,13 +65,10 @@ export default async function DashboardPage({
 
       {/* Main Content */}
       <main className="max-w-lg mx-auto px-4 py-6">
-        {/* Sync Prompt */}
-        <SyncPrompt />
-
         {/* Welcome Card */}
         <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20 mb-6">
           <h1 className="text-2xl font-bold text-white mb-1">
-            {getGreeting()}{profile?.display_name ? `, ${profile.display_name}` : ''}! 👋
+            {getGreeting()}{profile?.display_name ? `, ${profile.display_name}` : ''}!
           </h1>
           <p className="text-slate-400 text-sm">
             {transactions && transactions.length > 0 
