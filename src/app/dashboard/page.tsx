@@ -3,11 +3,12 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import TransactionsList from '@/components/TransactionsList'
 import SuccessToast from '@/components/SuccessToast'
+import SyncPrompt from '@/components/SyncPrompt'
 
 export default async function DashboardPage({
   searchParams,
 }: {
-  searchParams: Promise<{ added?: string }>
+  searchParams: Promise<{ added?: string; offline?: string }>
 }) {
   const supabase = await createClient()
   const params = await searchParams
@@ -35,11 +36,13 @@ export default async function DashboardPage({
     .limit(10)
 
   const showSuccess = params.added === 'true'
+  const showOfflineSuccess = params.offline === 'true'
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Success Toast */}
+      {/* Success Toasts */}
       {showSuccess && <SuccessToast message="Transaction saved!" />}
+      {showOfflineSuccess && <SuccessToast message="Saved offline! Sync when online." />}
 
       {/* Header */}
       <header className="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-lg border-b border-white/10">
@@ -65,6 +68,9 @@ export default async function DashboardPage({
 
       {/* Main Content */}
       <main className="max-w-lg mx-auto px-4 py-6">
+        {/* Sync Prompt */}
+        <SyncPrompt />
+
         {/* Welcome Card */}
         <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20 mb-6">
           <h1 className="text-2xl font-bold text-white mb-1">
@@ -108,7 +114,6 @@ export default async function DashboardPage({
             <TransactionsList transactions={transactions} />
           </div>
         ) : (
-          /* Empty State */
           <div className="text-center py-12">
             <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center">
               <svg className="w-10 h-10 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

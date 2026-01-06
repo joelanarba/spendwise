@@ -26,17 +26,17 @@ A mobile-first personal finance tracker that helps you understand where your mon
 
 ## Features
 
-- ✅ **Quick-add transactions** - Log spending in under 5 seconds
-- ✅ **7 categories** - Food, Transport, Bills, Shopping, Fun, Health, Other
-- ✅ **Weekly summary** - See spending breakdown by category
-- ✅ **Week-over-week comparison** - Track if you're spending more or less
-- ✅ **PWA support** - Install on phone, works offline
+- **Quick-add transactions** - Log spending in under 5 seconds
+- **7 categories** - Food, Transport, Bills, Shopping, Fun, Health, Other
+- **Weekly summary** - See spending breakdown by category
+- **Week-over-week comparison** - Track if you're spending more or less
+- **PWA support** - Install on phone, works offline
 
 ## Tech Stack
 
 | Layer | Technology |
 |-------|------------|
-| Frontend | Next.js 14 (App Router) |
+| Frontend | Next.js 16 (App Router) |
 | Backend | Supabase (Auth + PostgreSQL) |
 | Styling | Tailwind CSS |
 | PWA | Service Worker + Web Manifest |
@@ -60,7 +60,7 @@ esp/
 
 ## Documentation
 
-- [Step 1: Supabase Setup](docs/../supabase/SETUP.md)
+- [Step 1: Supabase Setup](supabase/SETUP.md)
 - [Step 2: Auth Flow](docs/STEP2_AUTH.md)
 - [Step 3: Quick-add UI](docs/STEP3_QUICK_ADD.md)
 - [Step 4: Weekly Summary](docs/STEP4_WEEKLY_SUMMARY.md)
